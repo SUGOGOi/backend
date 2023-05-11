@@ -17,6 +17,11 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use(cors({
+  origin:process.env.FRONTEND_URL,
+  credentials:true,
+  methods:["GET","POST","DELETE","PUT"]
+}))
 
 // importing or using routes
 import course from "./routes/courseRoutes.js";
@@ -32,3 +37,5 @@ app.use("/api/v1", others);
 app.use(ErrorMiddleware);
 
 export default app;
+
+app.get("/", (req,res) => res.send("server is working"));
