@@ -23,6 +23,7 @@ app.use(cors({
   credentials:true,
   methods:["GET","POST","DELETE","PUT"]
 }))
+app.options("*",cors())
 
 // importing or using routes
 import course from "./routes/courseRoutes.js";
