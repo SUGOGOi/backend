@@ -13,14 +13,14 @@ import { Stats } from "../models/Stats.js";
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
 
-  const File = req.file;
+  const file = req.file;
 
-  console.log(File)
+  console.log(file)
 
 
-  const fileUri = getDataUri(File);
+  const fileUri = getDataUri(file);
 
-  if (!name || !email || !password || !File) {
+  if (!name || !email || !password || !file) {
     return next(new ErrorHandler("Please enter all fields!", 400));
   }
 
