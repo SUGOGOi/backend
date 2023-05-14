@@ -23,6 +23,7 @@ export const register = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Please enter all fields!", 400));
   }
 
+
   let user = await User.findOne({ email });
 
   if (user) {
