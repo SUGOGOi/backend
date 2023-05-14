@@ -15,6 +15,8 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   const File = req.file;
 
+  console.log(File)
+
 
   const fileUri = getDataUri(File);
 
