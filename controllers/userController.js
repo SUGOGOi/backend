@@ -13,7 +13,7 @@ import { Stats } from "../models/Stats.js";
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
 
-  const file = req.file;
+  const file = req.File;
 
 
   const fileUri = getDataUri(file);
