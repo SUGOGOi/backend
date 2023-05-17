@@ -369,6 +369,7 @@ User.watch().on("change",async() =>{
 
 
   const subscription = await User.find({"subscription.status":"active"})
+  console.log(subscription)
 
   stats[0].subscriptions = subscription.length;
   stats[0].users = await User.countDocuments();
