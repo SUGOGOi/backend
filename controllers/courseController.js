@@ -192,13 +192,15 @@ Course.watch().on("change",async () =>{
 
   const courses = await Course.find({});
 
-  totalViews=0;
+  let totalViews=0;
 
   for(let i =0;i<courses.length;i++){
     const course = courses[i];
     totalViews += course.views
 
   }
+  // console.log(stats)
+  // console.log(stats[0])
 
   stats[0].views = totalViews;
   stats[0].createdAt = new Date(Date.now());
