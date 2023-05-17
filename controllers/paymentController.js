@@ -12,7 +12,7 @@ export const buySubscription = catchAsyncError(async (req, res, next) => {
     next(new ErrorHandler("You are admin, not need to buy subscription.", 400));
   }
 
-  const plan_id = process.env.PLAN_ID; //|| "plan_Lk8MW41LJjIqVd";
+  const plan_id = process.env.PLAN_ID || "plan_Lk8MW41LJjIqVd";
   const subscription = await instance.subscriptions.create({
     plan_id: plan_id,
     customer_notify: 1,
