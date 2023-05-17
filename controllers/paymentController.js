@@ -35,19 +35,20 @@ export const payemntVerification = catchAsyncError(async (req, res, next) => {
     req.body;
   const user = await User.findById(req.user._id);
 
-  const subscription = user.subscription.id;
+  const subscription_id = user.subscription.id;
 
-  const body = razorpay_subscription_id + "|" + razorpay_payment_id;
+  
 
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
-    .update(body.toString())
+    .update(razorpay_payment_id + "|" + subscription_id,"utf-8")
     .digest("hex");
 
   const isMatch = expectedSignature === razorpay_signature;
 
   if (!isMatch) {
     res.redirect(`${process.env.FRONTEND_URL}/paymentfail`);
+    next();
   }
 
   await Payment.create({
