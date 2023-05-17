@@ -366,6 +366,7 @@ export const deleteMyProfile = catchAsyncError(async (req, res, next) => {
 
 User.watch().on("change",async() =>{
   const stats = await Stats.find({}).sort({createdAt:"desc"}).limit(1);
+  console.log(stats)
 
 
   const subscription = await User.find({"subscription.status":"active"})
