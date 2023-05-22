@@ -299,6 +299,14 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
 
 //change role
 export const updateUserRole = catchAsyncError(async (req, res, next) => {
+  const myId = req.user._id;
+  const userID = req.params.id;
+  // console.log(myId,userID)
+
+   if(myId === userID){
+    next(new ErrorHandler("Can't chnage your own role!"));
+
+  }
   const user = await User.findById(req.params.id);
 
   if (!user) {
@@ -321,14 +329,7 @@ export const updateUserRole = catchAsyncError(async (req, res, next) => {
 
 //delete user  //delete admin+course TODO
 export const deleteUser = catchAsyncError(async (req, res, next) => {
-  const myId = req.user._id;
-  const userID = req.params.id;
-  console.log(myId,userID)
-
-   if(myId === userID){
-    next(new ErrorHandler("Can't chnage your own role!"));
-
-  }
+ 
 
   const user = await User.findById(req.params.id);
 
