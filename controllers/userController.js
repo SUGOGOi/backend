@@ -323,6 +323,7 @@ export const updateUserRole = catchAsyncError(async (req, res, next) => {
 export const deleteUser = catchAsyncError(async (req, res, next) => {
   const myId = req.user._id;
   const userID = req.params.id;
+  console.log(myId,userID)
 
    if(myId === userID){
     next(new ErrorHandler("Can't chnage your own role!"));
