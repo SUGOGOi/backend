@@ -298,16 +298,16 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
 export const updateUserRole = catchAsyncError(async (req, res, next) => {
   const myId = req.user._id;
   const userID = req.params.id;
-  // console.log(myId,userID)
+  console.log(myId,userID)
 
    if(myId === userID){
-    next(new ErrorHandler("Can't chnage your own role!"));
-
+    return next(new ErrorHandler("Can't chnage your own role!",400));
   }
+
   const user = await User.findById(req.params.id);
 
   if (!user) {
-    next(new ErrorHandler("User not found", 404));
+    return next(new ErrorHandler("User not found", 404));
   }
 
   if (user.role === "user") {
@@ -331,7 +331,7 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (!user) {
-    next(new ErrorHandler("User not found", 404));
+    return next(new ErrorHandler("User not found", 404));
   }
 
   await cloudinary.v2.uploader.destroy(user.avatar.public_id);
