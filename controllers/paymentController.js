@@ -12,7 +12,7 @@ export const buySubscription = catchAsyncError(async (req, res, next) => {
     next(new ErrorHandler("You are admin, not need to buy subscription.", 400));
   }
 
-  const plan_id = process.env.PLAN_ID || "plan_Lk8MW41LJjIqVd";
+  const plan_id = process.env.PLAN_ID || "plan_M2tfwzQWyU6zzs";
   const subscription = await instance.subscriptions.create({
     plan_id: plan_id,
     customer_notify: 1,
@@ -37,11 +37,9 @@ export const payemntVerification = catchAsyncError(async (req, res, next) => {
 
   const subscription_id = user.subscription.id;
 
-  
-
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
-    .update(razorpay_payment_id + "|" + subscription_id,"utf-8")
+    .update(razorpay_payment_id + "|" + subscription_id, "utf-8")
     .digest("hex");
 
   const isMatch = expectedSignature === razorpay_signature;
@@ -59,15 +57,10 @@ export const payemntVerification = catchAsyncError(async (req, res, next) => {
 
   user.subscription.status = "active";
   await user.save();
-  
 
-    res.redirect(
-      `${process.env.FRONTEND_URL}/paymentsuccess?reference=${razorpay_payment_id}`
-    );
-
-
-
-  
+  res.redirect(
+    `${process.env.FRONTEND_URL}/paymentsuccess?reference=${razorpay_payment_id}`
+  );
 });
 
 export const getRazorpayKey = catchAsyncError(async (req, res, next) => {
@@ -82,28 +75,28 @@ export const cancelSubscription = catchAsyncError(async (req, res, next) => {
 
   const Id = user.subscription.id;
 
-// let refund = false;
+  // let refund = false;
 
-await instance.subscriptions.cancel(Id);
-// console.log(Id);
+  await instance.subscriptions.cancel(Id);
+  // console.log(Id);
 
-// const payment = await Payment.findOne({
-//   razorpay_subscription_id: subscriptionId,
-// });
+  // const payment = await Payment.findOne({
+  //   razorpay_subscription_id: subscriptionId,
+  // });
 
-// const gap = Date.now() - payment.createdAt;
+  // const gap = Date.now() - payment.createdAt;
 
-// const refundTime = process.env.REFUND_DAYS * 24 * 60 * 60 * 1000;
+  // const refundTime = process.env.REFUND_DAYS * 24 * 60 * 60 * 1000;
 
-// if (refundTime > gap) {
-//   await instance.payments.refund(payment.razorpay_payment_id);
-//   refund = true;
-// }
+  // if (refundTime > gap) {
+  //   await instance.payments.refund(payment.razorpay_payment_id);
+  //   refund = true;
+  // }
 
-// await payment.remove();
-// user.subscription.id = undefined;
-// user.subscription.status = undefined;
-// await user.save();
+  // await payment.remove();
+  // user.subscription.id = undefined;
+  // user.subscription.status = undefined;
+  // await user.save();
   res.status(200).json({
     success: true,
     message:
